@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: leetlab-backend
+  name: prod-backend
   namespace: leetlab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: leetlab-backend
+      app: prod-backend
   template:
     metadata:
       labels:
-        app: leetlab-backend
+        app: prod-backend
     spec:
       containers:
         - name: backend
           # The CD workflow rewrites this tag on every deploy.
-          image: abhinandankaushik/leetlab-backend:latest
+          image: abhii1716/leetlab-backend:latest
           ports:
             - containerPort: 3000
           env:
@@ -37,11 +37,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: prod-backend
   namespace: leetlab
 spec:
   selector:
-    app: leetlab-backend
+    app: prod-backend
   ports:
     - port: 3000
       targetPort: 3000
