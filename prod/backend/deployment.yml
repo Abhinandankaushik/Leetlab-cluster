@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leetlab-backend
+  namespace: leetlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: leetlab-backend
+  template:
+    metadata:
+      labels:
+        app: leetlab-backend
+    spec:
+      containers:
+        - name: backend
+          # The CD workflow rewrites this tag on every deploy.
+          image: abhinandankaushik/leetlab-backend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: leetlab-secrets
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              value: redis://redis:6379
+            - name: QUEUE_ENABLED
+              value: "true"
+            - name: EXECUTION_CONCURRENCY
+              value: "5"
+            - name: EXECUTOR_LANGUAGES
+              value: python,gcc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: leetlab
+spec:
+  selector:
+    app: leetlab-backend
+  ports:
+    - port: 3000
+      targetPort: 3000

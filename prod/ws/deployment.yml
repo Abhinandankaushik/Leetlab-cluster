@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leetlab-ws
+  namespace: leetlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: leetlab-ws
+  template:
+    metadata:
+      labels:
+        app: leetlab-ws
+    spec:
+      containers:
+        - name: ws
+          # The CD workflow rewrites this tag on every deploy.
+          image: abhinandankaushik/leetlab-ws:latest
+          ports:
+            - containerPort: 4001
+          env:
+            - name: WS_PORT
+              value: "4001"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ws
+  namespace: leetlab
+spec:
+  selector:
+    app: leetlab-ws
+  ports:
+    - port: 4001
+      targetPort: 4001
