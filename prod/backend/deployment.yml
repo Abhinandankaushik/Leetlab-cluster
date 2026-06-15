@@ -16,7 +16,7 @@ spec:
       containers:
         - name: backend
           # The CD workflow rewrites this tag on every deploy.
-          image: abhii1716/leetlab-backend:a09535df9fac8c3e844f2704e5dd67189a891e42
+          image: abhii1716/leetlab-backend:e39dd0d0dd5a1752247ade37b9877fb767da1938
           ports:
             - containerPort: 3000
           env:
