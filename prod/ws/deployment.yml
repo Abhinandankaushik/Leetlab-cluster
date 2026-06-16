@@ -16,7 +16,7 @@ spec:
       containers:
         - name: ws
           # The CD workflow rewrites this tag on every deploy.
-          image: abhii1716/leetlab-ws:c66c34540051fd828b2eebc81885b178ed7e9a42
+          image: abhii1716/leetlab-ws:1b1b0616f6ec71fc3a5a0fe5a16a09bbe175591e
           ports:
             - containerPort: 4001
           env:
